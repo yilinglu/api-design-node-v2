@@ -32,6 +32,10 @@ export const decodeToken = () => (req, res, next) => {
 }
 
 export const getFreshUser = () => (req, res, next) => {
+    if (config.disableAuth) {
+        return next()
+      }
+        
   return User.findById(req.user.id)
     .then(function(user) {
       if (!user) {

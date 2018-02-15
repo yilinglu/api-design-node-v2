@@ -63,10 +63,11 @@ export const getAll = (model) => (req, res, next) => {
 export const findByParam = (model) => (req, res, next, id) => {
   return controllers.findByParam(model, id)
     .then(doc => {
+        console.log(`findByParam result: ${JSON.stringify(doc, null, 2)}`);
       if (!doc) {
         next(new Error('Not Found Error'))
       } else {
-        req.docFromId
+        req.docFromId = doc
         next()
       }
     })
