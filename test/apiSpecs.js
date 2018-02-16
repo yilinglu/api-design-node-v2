@@ -8,7 +8,7 @@ import { User } from '../src/api/resources/user/user.model'
 chai.use(chaiHttp)
 
 const createApiSpec = (model, resourceName, newResource) => {
-  describe.only(`/${resourceName}`, () => {
+  describe(`/${resourceName}`, () => {
     let jwt
 
     beforeEach(async () => {
