@@ -8,7 +8,7 @@ import { User } from '../src/api/resources/user/user.model'
 chai.use(chaiHttp)
 
 const createApiSpec = (model, resourceName, newResource) => {
-  describe(`/${resourceName}`, () => {
+  describe.only(`/${resourceName}`, () => {
     let jwt
 
     beforeEach(async () => {
@@ -29,6 +29,17 @@ const createApiSpec = (model, resourceName, newResource) => {
 
         expect(result).to.have.status(200)
         expect(result).to.be.json
+      }),
+
+      it(`should get one ${resourceName}`, async () => {
+          const newDoc = await model.create(newResource);
+          const result = await chai.request(app)
+            .get(`/api/${resourceName}/${newDoc.id}`)
+            .set('Authorization', `Bearer ${jwt}`);
+            console.log(`Getone result ${JSON.stringify(result, null, 1)}`);
+        expect(result).to.have.status(200);
+        expect(result).to.be.json;
+    
       })
     })
 
